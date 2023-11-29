@@ -18,7 +18,8 @@
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <script src="https://cdn.jsdelivr.net/gh/zebzhao/jQuery.disableAutoFill/dist/jquery.disableAutoFill.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-        <script src="../../asset/js/main.js"></script> 
+        <script src="../../asset/js/main.js"></script>
+        <script src="../../asset/js/signup.js"></script>
     </head>
     <body>
         <div class="row g-0">

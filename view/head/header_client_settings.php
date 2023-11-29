@@ -9,10 +9,10 @@
 <div class="container-fluid primer-div">
     <div class="row">
         <div class="col-4">
-            <div class="row logo-col">
+            <a class="row logo-col" href="panel_control_client.php" id="loader_page">
                 <div class="logo-text col">MOVE-IT</div>
                 <div class="logo col-3"></div>
-            </div>
+            </a>
         </div>
         <?php if($tabla === true): ?>
             <div class="col-4 service-col">
@@ -44,7 +44,7 @@
         </div>
         <?php endif; ?>
         <div class="col-2 settings-col">
-            <a href="settings.php" class="settings">Ajustes</a>
+            
         </div>
         <div class="col-2 session-col">
             <div>

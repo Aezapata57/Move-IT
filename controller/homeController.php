@@ -171,59 +171,23 @@
             return $this->MODEL->traerArticulos($email);
         }
 
+        //------------------------------ELIMINAR-CUENTA------------------------------//
+
+        public function eliminarCuenta($email){
+            $result = $this->MODEL->tablaExiste($email);
+
+            if($result){
+                $this->MODEL->borrarInventario($email);
+            }
+            $this->MODEL->borrarDetalles($email);
+            return $this->MODEL->borrarUsuario($email);
+        }
 
 
+        //------------------------------SERVICIO------------------------------//
 
-
-
-
-
-        
-        public function show(){
-            return ($this->MODEL->show()) ? $this->MODEL->show() : false;
-        }
-        public function read($id){
-            return ($this->MODEL->read($id) != false) ? $this->MODEL->read($id) : header("Location:show.php");
-        }
-        public function update($id, $nombre, $apellidos, $email, $telefono, $ciudad, $fecha, $cc){
-            return($this->MODEL->update($id, $nombre, $apellidos, $email, $telefono, $ciudad, $fecha, $cc) != false) ? header("Location:read.php?id=".$id) : header("Location:show.php");
-        }
-        public function delete($id){
-            return($this->MODEL->delete($id)) ? header("Location:show.php") : header("Location:read.php?id=".$id);
-        }
-        //---------SOPORTE---------//
-        public function contacto($nombre, $problema, $comentario, $telefono){
-            $id = $this->MODEL->reporte($nombre, $problema, $comentario, $telefono);
-            return($id!=false) ? header("Location:show.php?id=".$id) : false;
-        }
-        public function showsupport(){
-            return ($this->MODEL->showsupport()) ? $this->MODEL->showsupport() : false;
-        }
-        public function readsupport($id){
-            return ($this->MODEL->readsupport($id) != false) ? $this->MODEL->readsupport($id) : header("Location:show_p.php");
-        }
-        public function updatesupport($id, $nombre, $problema, $comentario, $telefono){
-            return($this->MODEL->updatesupport($id, $nombre, $problema, $comentario, $telefono) != false) ? header("Location:read.php?id=".$id) : header("Location:show_p.php");
-        }
-        public function deletesupport($id){
-            return($this->MODEL->deletesupport($id)) ? header("Location:show_p.php") : header("Location:read.php?id=".$id);
-        }
-        //---------SERVICIOS---------//
-        public function servicio($origen,$destino,$hora,$fecha,$tipo,$cantidad){
-            $id = $this->MODEL->mudanza($origen,$destino,$hora,$fecha,$tipo,$cantidad);
-            return($id!=false) ? header("Location:show_s.php?id=".$id) : false;
-        }
-        public function showservice(){
-            return ($this->MODEL->showservice()) ? $this->MODEL->showservice() : false;
-        }
-        public function readservice($id){
-            return ($this->MODEL->readservice($id) != false) ? $this->MODEL->readservice($id) : header("Location:show.php");
-        }
-        public function updateservice($id, $origen,$destino,$hora,$fecha,$tipo,$cantidad){
-            return($this->MODEL->updateservice($id, $origen,$destino,$hora,$fecha,$tipo,$cantidad) != false) ? header("Location:read.php?id=".$id) : header("Location:show.php");
-        }
-        public function deleteservice($id){
-            return($this->MODEL->deleteservice($id)) ? header("Location:show.php") : header("Location:read.php?id=".$id);
+        public function verficarServicio($email){
+            $this->MODEL->verificarServicio($email);
         }
     }
 ?>
