@@ -1,8 +1,10 @@
 <?php
     require_once("head.php");
     require_once("../../controller/homeController.php");
+    
 
     $obj = new homeController();
+    $confirmado = $obj->verificarConfirmacion($_SESSION['datas']);
     $tabla = $obj->tablaExiste($_SESSION['datas']);
 ?>
 <div class="container-fluid primer-div">
@@ -13,7 +15,31 @@
                 <div class="logo col-3"></div>
             </div>
         </div>
-        <?php if($tabla === true): ?>
+        <?php if($confirmado == 1): ?>
+            <div class="col-4 service-col">
+                <a class="service" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Solicitar servicio</a>
+            </div>
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="false" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header text-modal">
+                            <h1 class="modal-title fs-5" id="staticBackdrop">Alerta</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-modal">
+                            Ya cuentas con un servicio confirmado
+                            <br>
+                            ¿Que deseas hacer?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary text-modal" data-bs-dismiss="modal">Cerrar</button>
+                            <a type="button" class="btn btn-danger text-modal" href="news.php" id="loader_page">Cancelación y quejas</a>
+                            <a type="button" class="btn btn-warning text-modal" href="inventary.php" id="loader_page">Editar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php elseif($tabla === true): ?>
             <div class="col-4 service-col">
                 <a class="service" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Solicitar servicio</a>
             </div>
@@ -38,12 +64,12 @@
                 </div>
             </div>
         <?php else: ?>
-        <div class="col-4 service-col">
-            <a href="create_service.php" class="service" id="loader_page">Solicitar servicio</a>
-        </div>
+            <div class="col-4 service-col">
+                <a href="create_service.php" class="service" id="loader_page">Solicitar servicio</a>
+            </div>
         <?php endif; ?>
         <div class="col-2 settings-col">
-            <a href="" class="settings">Ajustes</a>
+            <a href="settings.php" class="settings">Ajustes</a>
         </div>
         <div class="col-2 session-col">
             <div>

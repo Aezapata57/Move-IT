@@ -28,17 +28,12 @@
                             <form action="session.php" method="POST" autocomplete="off">
                                 
                                 <div class="form-outline mb-2 mx-3">
-                                    <input type="email" name="EMAIL" class="form-control input" id="EMAIL" placeholder="name@example.com" aria-describedby="inputGroupPrepend" required>
-                                    <label for="EMAIL" class="form-label"></label>
+                                    <input type="email" name="EMAIL" class="form-control input" id="EMAIL" placeholder="name@example.com"  required>
+                                    <label for="EMAIL" style="opacity: 0;"  class="form-label">email</label>
                                 </div>
                                 <div class="form-outline mb-2 mx-3">
-                                    <input type="password" name="PASSWORD" class="form-control input" id="PASSWORD" placeholder="password" aria-describedby="inputGroupPrepend" required minlength="8" autocomplete="current-password" dir="ltr">
-                                    <div class="box-eye">
-                                        <button type="button" onclick="mostrarContraseña('PASSWORD','eyepassword')">
-                                            <i id="eyepassword" class="fa-sharp fa-solid fa-eye changePassword"></i>
-                                        </button>
-                                    </div>
-                                    <label for="PASSWORD" class="form-label"></label>
+                                    <input type="password" name="PASSWORD" class="form-control input" id="PASSWORD" placeholder="password"  required minlength="8" autocomplete="current-password" dir="ltr">
+                                    <label for="PASSWORD" style="opacity: 0;" class="form-label">password</label>
                                 </div>
                                 <?php if(!empty($_GET['message'])):?>
                                     <div id="alertMessage" style="margin: auto;" class="alert alert-success mb-2" role="alert">
@@ -85,9 +80,9 @@
             </div>
         </div>
         <div class="col-lg-6 gradient">
-            <div class="background1"><img src="../../asset/image/one.png" alt="uno"></div>
+            <div class="background1"><img src="../../asset/image/one.png" alt="imagen de muestra uno"></div>
             <div class="separate"></div>
-            <div class="background2"><img src="../../asset/image/two.png" alt="dos"></div>
+            <div class="background2"><img src="../../asset/image/two.png" alt="imagen de muestra dos"></div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>

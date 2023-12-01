@@ -42,11 +42,15 @@
 }
 
 .about-col, .contact-col{
+    padding-top: 25px;
+}
+
+.language-col{
     padding-top: 20px;
 }
 
 .about, .contact{
-    text-align: center;
+    text-align: right;
     font-family: 'Lexend Giga', sans-serif;
     font-style: normal;
     color: #000000;

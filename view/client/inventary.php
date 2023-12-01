@@ -14,6 +14,7 @@ $type = $obj->RecogerTipo($email);
 if ($type != "Cliente") {
     header("Location:../driver/panel_control_driver.php");
 }
+
 $datosTabla = $obj->obtenerDatosTabla($email);
 ?>
 

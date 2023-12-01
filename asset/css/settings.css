@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka&family=Lexend+Giga&family=Poppins&display=swap');
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; /* Evita la barra de desplazamiento vertical */
+}
+
+.logo-text{
+    text-decoration: none;
+}
+
+.home{
+    margin: 0 auto;
+    display: fixed;
+    align-items: center;
+    text-align: justify;
+}
+
+.logo-text-settings{
+    font-family: 'Lexend Giga', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 30px;
+    letter-spacing: 0.325em;
+    color: #000000;
+    text-decoration: none;
+}
+    
+.logo{
+    width: 87px;
+    height: 54px;
+    background: url(../image/logo.svg) no-repeat;
+}
+
+.container-1{
+    background-color: #e7dbff88;
+    padding: 20px;
+    margin: 0 auto;
+    display: fixed;
+    align-items: center;
+    text-align: justify;
+}
+.container-2{
+    background-color: #dbc8ffa2;
+    padding: 20px;
+}
+
+.gradient {
+    background: linear-gradient(to right, #cec3e0, #8772B1);
+    height: 100vh;
+    overflow: auto;
+}
+
+.text-settings{
+    align-items: center;
+    text-align: justify;
+    text-decoration: none;
+    font-family: 'Lexend Giga', sans-serif;
+    font-style: normal;
+    font-size: 13px;
+    margin: 0 auto;
+    display: fixed;
+}
+
+.input-setting{
+    margin-left: 20px;
+}

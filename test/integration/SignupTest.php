@@ -1,44 +1,125 @@
 <?php
-declare(strict_types=1);
-require_once(__DIR__ . '/../../controller/homeController.php');
-
 use PHPUnit\Framework\TestCase;
 
-class SignupTest extends TestCase
-{
-    public function testSuccessfulSignup(): void
-    {
-        chdir(__DIR__ . '/../../../view/user'); // Establecer el directorio de trabajo a la ubicación de signup.php
+require_once __DIR__ ."/../../controller/homeController.php";
 
-        // Simular una solicitud POST a signup.php con datos válidos
-        $_POST['EMAIL'] = 'usuario@dominio.com';
-        $_POST['PHONE'] = '1234567890';
-        $_POST['CITY'] = 'Bogota';
-        $_POST['PASSWORD'] = 'password';
-        $_POST['CONFIRM'] = 'password';
-        $_POST['DATE'] = '1990-01-01';
-        $_POST['CC'] = '123456789';
-        $_POST['TYPE'] = 'Cliente';
-        $_POST['TOKEN'] = '';
-        $_POST['VERIFICADO'] = '';
-        $_POST['INTENTOS'] = '';
-        $_POST['ULTIMO_INTENTO'] = '';
-        $_POST['RECUPERACION_TOKEN'] = '';
-        $_POST['RECUPERACION_EXPIRACION'] = '';
-        // ... otros campos necesarios
+class SignupTest extends TestCase {
 
-        ob_start();
-        include 'signup.php'; // Ejecutar signup.php
-        ob_end_clean();
+    private $homeController;
 
-        chdir(__DIR__); // Restaurar el directorio de trabajo actual después de la prueba
-        // Esto es importante para evitar posibles efectos secundarios en otras pruebas
+    protected function setUp(): void {
+        $this->homeController = new homeController();
+    }
 
-        // Verificar que el usuario haya sido registrado correctamente
-        $homeController = new homeController();
-        $isUserRegistered = $homeController->verificarEmail('usuario@dominio.com');
-        $this->assertTrue($isUserRegistered, 'El usuario no se registró correctamente');
+    //---------------------------REGISTRO---------------------------------//
+    public function testGuardarUsuario1() {
+        // Definir datos de prueba
+        $nombre = "John";
+        $apellidos = "Doe";
+        $email = "john.doe@example.com";
+        $telefono = "123456789";
+        $ciudad = "Ciudad";
+        $contraseña = "password123";
+        $fecha = "2023-01-01";
+        $cc = "123456789";
+        $tipo = "cliente";
+        $token = "";
+        $verificado = "";
+        $intentos = "";
+        $ultimo_intento = "";
+        $recuperacion_token = "";
+        $recuperacion_expiracion = "";
 
-        // Puedes continuar agregando más pruebas para otros escenarios
+        // Ejecutar el método que se va a probar
+        $result = $this->homeController->guardarUsuario(
+            $nombre, $apellidos, $email, $telefono, $ciudad, $contraseña, $fecha, $cc,
+            $tipo, $token, $verificado, $intentos, $ultimo_intento, $recuperacion_token,
+            $recuperacion_expiracion
+        );
+
+        // Verificar el resultado
+        $this->assertTrue($result, "Failed to save user data");
+    }
+
+    public function testGuardarUsuario2() {
+        // Definir datos de prueba
+        $nombre = "Marco";
+        $apellidos = "Perez";
+        $email = "marquito.doe@example.com";
+        $telefono = "23456789";
+        $ciudad = "Bogota";
+        $contraseña = "password123123";
+        $fecha = "2023-01-01";
+        $cc = "123456789";
+        $tipo = "cliente";
+        $token = "";
+        $verificado = "";
+        $intentos = "";
+        $ultimo_intento = "";
+        $recuperacion_token = "";
+        $recuperacion_expiracion = "";
+
+        // Ejecutar el método que se va a probar
+        $result = $this->homeController->guardarUsuario(
+            $nombre, $apellidos, $email, $telefono, $ciudad, $contraseña, $fecha, $cc,
+            $tipo, $token, $verificado, $intentos, $ultimo_intento, $recuperacion_token,
+            $recuperacion_expiracion
+        );
+
+        // Verificar el resultado
+        $this->assertTrue($result, "Failed to save user data");
+    }
+
+    public function testLimpiarCadena() {
+        $input = "<script>alert('Hello');</script>";
+        $cleaned = $this->homeController->limpiarcadena($input);
+        $this->assertStringNotContainsString("<script>", $cleaned, "Failed to clean string");
+    }
+
+    public function testLimpiarCorreo() {
+        $input = "john.doe@example.com<script>";
+        $cleaned = $this->homeController->limpiarcorreo($input);
+        $this->assertEquals("john.doe@example.com", $cleaned, "Failed to clean email");
+    }
+
+    // Add more tests for other methods in the HomeController class
+
+    //---------------------------VERIFICAR-REGISTRO---------------------------------//
+
+    public function testVerificarToken() {
+        // Create a test token and validate it
+        $_GET['token'] = "test_token";
+        $result = $this->homeController->verificarToken();
+        $this->assertFalse($result, "Failed to verify token");
+    }
+
+    //---------------------------INICIO DE SESION---------------------------------//
+
+    public function testVerificarEmail() {
+        $email = "john.doe@example.com";
+        $result = $this->homeController->verificarEmail($email);
+        $this->assertFalse($result, "Correo ya existente");
+    }
+
+    // Add more tests for other methods in the HomeController class
+
+    //-----------------------------BLOQUEO---------------------------------//
+
+    public function testActualizarIntentos() {
+        $email = "john.doe@example.com";
+        $intentos = 3;
+        $ultimoIntento = time();
+        $result = $this->homeController->actualizarIntentos($email, $intentos, $ultimoIntento);
+        $this->assertTrue($result, "Failed to update login attempts");
+    }
+
+    // Add more tests for other methods in the HomeController class
+
+    // ... Add more test cases for other functionalities ...
+
+    //-----------------------------CLEANUP---------------------------------//
+
+    protected function tearDown(): void {
+        // Cleanup, if necessary
     }
 }

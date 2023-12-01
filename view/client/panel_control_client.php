@@ -6,6 +6,7 @@
 
     if(empty($_SESSION['datas'])){
         header("Location:../user/login.php");
+        exit();
     }
 
     $email = $_SESSION['datas'];
@@ -24,7 +25,11 @@
 </head>
 <body>
 <div class="container-fluid">
-    <h1 class="text-center mt-4 mb-5">Bienvenido <?= $_SESSION['datas']?></h1>
+    <?php if(!empty($_GET['title'])):?>
+        <div id="alertMessage" class="alert alert-success mb-2" role="alert">
+            <?= !empty($_GET['title']) ? $_GET['title'] : ""?>
+        </div>
+    <?php endif;?>
     <?php if(!empty($_GET['message'])):?>
         <div id="alertMessage" class="alert alert-success mb-2" role="alert">
             <?= !empty($_GET['message']) ? $_GET['message'] : ""?>

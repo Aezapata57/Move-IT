@@ -6,7 +6,7 @@ require_once("../../vendor/autoload.php");
 use PHPMailer\PHPMailer\PHPMailer;
 
 $obj = new homeController();
-$nombre = $_POST["NAMES"];
+$nombre = htmlentities($_POST["NAMES"], ENT_QUOTES, 'UTF-8');
 $apellidos = $_POST["SURNAMES"];
 $email = $_POST["EMAIL"];
 $telefono = $_POST["PHONE"];
@@ -25,8 +25,20 @@ $error = "";
 $message = "";
 
 $fecha = $_POST["DATE"];
-$fecha_nacimiento = DateTime::createFromFormat('d/m/Y', $fecha);
-$fecha_nacimiento_str = $fecha_nacimiento->format('Y-m-d');
+try {
+    $fecha_nacimiento = DateTime::createFromFormat('Y-m-d', $fecha);
+
+    if ($fecha_nacimiento instanceof DateTime) {
+        $edad = $fecha_nacimiento->diff(new DateTime())->y;
+    } else {
+        // Error en la creación del objeto DateTime
+        // Puedes agregar algún mensaje de error o registrar este problema para depuración
+        $error = "Error al crear el objeto DateTime desde la fecha de nacimiento.";
+    }
+} catch (Exception $e) {
+    // Captura cualquier excepción lanzada al procesar la fecha
+    $error = "Excepción al procesar la fecha de nacimiento: " . $e->getMessage();
+}
 $edad = $fecha_nacimiento->diff(new DateTime())->y;
 
 if ($contraseña == $confirmarContraseña) {
@@ -62,7 +74,7 @@ if ($contraseña == $confirmarContraseña) {
         header("Location:signup.php?error=" . $error . "&NAMES=" . $nombre . "&SURNAMES=" . $apellidos . "&EMAIL=" . $email . "&PHONE=" . $telefono . "&DATE=" . $fecha . "&CC=" . $cc);
     }else{
         $obj->guardarUsuario($nombre, $apellidos, $email, $telefono, $ciudad, $contraseña, $fecha, $cc, $tipo, $token, $verificado, $intentos, $ultimo_intento, $recuperacion_token, $recuperacion_expiracion);
-        $verificationLink = "http://localhost/login/view/user/verificar.php?token=" . $token;
+        $verificationLink = "http://localhost/move-it/view/user/verificar.php?token=" . $token;
 
         $mail = new PHPMailer;
         $mail->isSMTP();
@@ -89,6 +101,7 @@ if ($contraseña == $confirmarContraseña) {
                             font-family: Arial, sans-serif;
                             background-color: #f4f4f4;
                             padding: 20px;
+                            text-align: center;
                         }
                         .cont {
                             margin: 0 auto;
@@ -121,7 +134,7 @@ if ($contraseña == $confirmarContraseña) {
                             <div class='row' style='margin: 0 auto;display: fixed;width: 350px;margin-top: 20px;align-items: center;text-align: center;'>
                                 <div class='col-4' style='width: 100px;margin: 0 auto;display: fixed;align-items: center;'>
                                     <div style='width: 100px;'>
-                                        <img src='https://i.imgur.com/WEulCzV.png' alt='Logo' style='width: 100px;  >
+                                        <img src='https://i.imgur.com/WEulCzV.png' alt='Logo' style='width: 100px;'>
                                     </div>
                                 </div>
                                 <div class='cont col-8'>

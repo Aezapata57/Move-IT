@@ -207,6 +207,36 @@
     padding-left: 30px;
 }
 
+.input-mo{
+    margin-left: 50px;
+    background-color: #bbbbbb9c;
+    border-radius: 0px;
+    height: 50px;
+    font-family: 'Lexend Giga', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 25px;
+    letter-spacing: 0.10em;
+    padding-left: 30px;
+    width: 400px;
+}
+
+.input-des{
+    margin-left: 50px;
+    background-color: #bbbbbb9c;
+    border-radius: 0px;
+    height: 150px;
+    font-family: 'Lexend Giga', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 25px;
+    letter-spacing: 0.10em;
+    padding-left: 30px;
+    width: 400px;
+}
+
 .CC{
     background-color: #bbbbbb9c;
     border-radius: 0px;

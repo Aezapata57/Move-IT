@@ -3,7 +3,7 @@
         private $PDO;
         public function __construct()
         {
-            require_once('../../config/db.php');
+            require_once __DIR__ . '../../config/db.php';
             $pdo = new db();
             $this->PDO = $pdo->conexion();
         }
@@ -76,7 +76,7 @@
 
         //---------------------------VERIFICAR-REGISTRO---------------------------------//
         public function validarToken($token) {
-            $statement = $this->PDO->prepare("UPDATE datas SET VERIFICADO = 1 AND TIEMPO = 0 WHERE TOKEN = :TOKEN");
+            $statement = $this->PDO->prepare("UPDATE datas SET VERIFICADO = 1, INTENTOS = 0 WHERE TOKEN = :TOKEN");
             $statement->bindParam(':TOKEN', $token, PDO::PARAM_STR);
             try {
                 $statement->execute();
@@ -84,7 +84,7 @@
             } catch (PDOException $e) {
                 return false;
             }
-        }
+        }        
        
         //---------------------------INICIO DE SESION---------------------------------//
         public function obtenerclave($email){
@@ -338,8 +338,8 @@
             return $statement->fetch()["HORA"];
         }
 
-        public function guardarDirecciones($email, $origen, $destino, $fecha, $hora, $verificado){
-            $statement = $this->PDO->prepare("INSERT INTO details VALUES(null, :EMAIL, :ORIGEN, :DESTINO, :FECHA, :HORA, :VERIFICADO)");
+        public function guardarDirecciones($email, $origen, $destino, $fecha, $hora){
+            $statement = $this->PDO->prepare("INSERT INTO details VALUES(null, :EMAIL, :ORIGEN, :DESTINO, :FECHA, :HORA)");
             $statement->bindParam(":EMAIL",$email);
             $statement->bindParam(":ORIGEN",$origen);
             $statement->bindParam(":DESTINO",$destino);
@@ -392,83 +392,37 @@
             return $result;
         }
 
+        //------------------------------ELIMINAR-CUENTA------------------------------//
 
-
-
-
-
-
-
-        public function reporte($nombre, $problema, $comentario, $telefono){
-            $statement = $this->PDO->prepare("INSERT INTO contacts VALUES(null, :NAMES, :PROBLEM, :COMENT, :PHONE)");
-            $statement->bindParam(":NAMES",$nombre);
-            $statement->bindParam(":PROBLEM",$problema);
-            $statement->bindParam(":COMENT",$comentario);
-            $statement->bindParam(":PHONE",$telefono);
-            try {
-                $statement->execute();
-                return true;
-            } catch (PDOException $e) {
-                return false;
-            }
-        }
-        public function show(){
-            $stament = $this->PDO->prepare("SELECT * FROM datas");
-            return ($stament->execute()) ? $stament->fetchAll() : false ;
-        }
-        public function read($id){
-            $stament = $this->PDO->prepare("SELECT * FROM datas WHERE ID = :ID limit 1");
-            $stament->bindParam(":ID", $id);
-            return ($stament->execute()) ? $stament->fetch() : false ;
-        }
-        public function update($id, $nombre, $apellidos, $email, $telefono, $ciudad, $fecha, $cc){
-            $stament = $this->PDO->prepare("UPDATE datas SET NAMES = :NAMES, SURNAMES = :SURNAMES, EMAIL = :EMAIL, PHONE = :PHONE, CITY = :CITY, DATE = :DATE, CC = :CC WHERE ID = :ID");
-            $stament->bindParam(":NAMES",$nombre);
-            $stament->bindParam(":SURNAMES",$apellidos);
+        public function borrarUsuario($email){
+            $stament = $this->PDO->prepare("DELETE FROM datas WHERE EMAIL = :EMAIL");
             $stament->bindParam(":EMAIL",$email);
-            $stament->bindParam(":PHONE",$telefono);
-            $stament->bindParam(":CITY",$ciudad);
-            $stament->bindParam(":DATE",$fecha);
-            $stament->bindParam(":CC",$cc);
-            $stament->bindParam(":ID",$id);
-            return ($stament->execute()) ? $id : false;
+            return $stament->execute();
         }
-        public function delete($id){
-            $stament = $this->PDO->prepare("DELETE FROM datas WHERE ID = :ID");
-            $stament->bindParam(":ID",$id);
-            return ($stament->execute()) ? true : false;
+
+        public function borrarDetalles($email){
+            $stament = $this->PDO->prepare("DELETE FROM details WHERE EMAIL = :EMAIL");
+            $stament->bindParam(":EMAIL",$email);
+            return $stament->execute();
         }
-        public function showsupport(){
-            $stament = $this->PDO->prepare("SELECT * FROM contacts");
-            return ($stament->execute()) ? $stament->fetchAll() : false ;
+
+        public function borrarInventario($email) {
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                return false;
+            }
+
+            $query = "DROP TABLE `$email`";
+            $statement = $this->PDO->prepare($query);
+            $statement->execute();
         }
-        public function readsupport($id){
-            $stament = $this->PDO->prepare("SELECT * FROM contacts WHERE ID = :ID limit 1");
-            $stament->bindParam(":ID", $id);
-            return ($stament->execute()) ? $stament->fetch() : false ;
-        }
-        public function updatesupport($id, $nombre, $problema, $comentario, $telefono){
-            $stament = $this->PDO->prepare("UPDATE contacts SET NAMES = :NAMES, PROBLEM = :PROBLEM, COMENT = :COMENT, PHONE = :PHONE WHERE ID = :ID");
-            $stament->bindParam(":NAMES",$nombre);
-            $stament->bindParam(":PROBLEM",$problema);
-            $stament->bindParam(":COMENT",$comentario);
-            $stament->bindParam(":PHONE",$telefono);
-            $stament->bindParam(":ID",$id);
-            return ($stament->execute()) ? $id : false;
-        }
-        public function deletesupport($id){
-            $stament = $this->PDO->prepare("DELETE FROM contacts WHERE ID = :ID");
-            $stament->bindParam(":ID",$id);
-            return ($stament->execute()) ? true : false;
-        }
-        public function mudanza($origen,$destino,$hora,$fecha,$tipo,$cantidad){
-            $statement = $this->PDO->prepare("INSERT INTO service VALUES(null, :ORIGEN, :DESTINO, :HORA, :FECHA, :TIPO, :CANTIDAD)");
-            $statement->bindParam(":ORIGEN",$origen);
-            $statement->bindParam(":DESTINO",$destino);
-            $statement->bindParam(":HORA",$hora);
+
+        public function servicioCompleto($email) {
+            $descripcion = "";
+            $fecha = "";
+            $statement = $this->PDO->prepare("INSERT INTO `estados` (`EMAIL`, `COMPLETO`, `CANCELADA`, `AFECTACION`, `DESCRIPCION`, `FECHA`) VALUES (:EMAIL, '1', '0', '0', :DESCRIPCION, :FECHA);");
+            $statement->bindParam(":EMAIL",$email);
+            $statement->bindParam(":DESCRIPCION",$descripcion);
             $statement->bindParam(":FECHA",$fecha);
-            $statement->bindParam(":TIPO",$tipo);
-            $statement->bindParam(":CANTIDAD",$cantidad);
             try {
                 $statement->execute();
                 return true;
@@ -476,30 +430,47 @@
                 return false;
             }
         }
-        public function showservice(){
-            $stament = $this->PDO->prepare("SELECT * FROM service");
-            return ($stament->execute()) ? $stament->fetchAll() : false ;
+
+        public function servicioCancelado($email) {
+            $statement = $this->PDO->prepare("UPDATE estado SET CANCELADO = 1 WHERE EMAIL = :EMAIL");
+            $statement->bindParam(":EMAIL",$email);
+            try {
+                $statement->execute();
+                return true;
+            } catch (PDOException $e) {
+                return false;
+            }
         }
-        public function readservice($id){
-            $stament = $this->PDO->prepare("SELECT * FROM service WHERE ID = :ID limit 1");
-            $stament->bindParam(":ID", $id);
-            return ($stament->execute()) ? $stament->fetch() : false ;
+
+        public function servicioAfectado($email, $descripcion) {
+            $statement = $this->PDO->prepare("UPDATE estado SET AFECTACION = 1, DESCRIPCION = :DESCRIPCION WHERE EMAIL = :EMAIL");
+            $statement->bindParam(":EMAIL",$email);
+            $statement->bindParam(":DESCRIPCION",$descripcion);
+            try {
+                $statement->execute();
+                return true;
+            } catch (PDOException $e) {
+                return false;
+            }
         }
-        public function updateservice($id, $origen,$destino,$hora,$fecha,$tipo,$cantidad){
-            $stament = $this->PDO->prepare("UPDATE service SET ORIGEN = :ORIGEN, DESTINO = :DESTINO, HORA = :HORA, FECHA = :FECHA, TIPO = :TIPO, CANTIDAD = :CANTIDAD WHERE ID = :ID");
-            $stament->bindParam(":ORIGEN",$origen);
-            $stament->bindParam(":DESTINO",$destino);
-            $stament->bindParam(":HORA",$hora);
-            $stament->bindParam(":FECHA",$fecha);
-            $stament->bindParam(":TIPO",$tipo);
-            $stament->bindParam(":CANTIDAD",$cantidad);
-            $stament->bindParam(":ID",$id);
-            return ($stament->execute()) ? $id : false;
+
+        public function servicioFecha($email, $fecha) {
+            $statement = $this->PDO->prepare("UPDATE estado SET FECHA = :FECHA WHERE EMAIL = :EMAIL");
+            $statement->bindParam(":EMAIL",$email);
+            $statement->bindParam(":FECHA",$fecha);
+            try {
+                $statement->execute();
+                return true;
+            } catch (PDOException $e) {
+                return false;
+            }
         }
-        public function deleteservice($id){
-            $stament = $this->PDO->prepare("DELETE FROM service WHERE ID = :ID");
-            $stament->bindParam(":ID",$id);
-            return ($stament->execute()) ? true : false;
+
+        public function verificarConfirmacion($email){  
+            $statement = $this->PDO->prepare("SELECT COMPLETO FROM estados WHERE EMAIL = :EMAIL;");
+            $statement->bindParam(":EMAIL",$email);
+            $statement->execute();
+            return $statement->fetch()["COMPLETO"];
         }
     }
 

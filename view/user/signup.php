@@ -18,7 +18,8 @@
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <script src="https://cdn.jsdelivr.net/gh/zebzhao/jQuery.disableAutoFill/dist/jquery.disableAutoFill.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-        <script src="../../asset/js/main.js"></script> 
+        <script src="../../asset/js/main.js"></script>
+        <script src="../../asset/js/signup.js"></script>
     </head>
     <body>
         <div class="row g-0">
@@ -44,27 +45,27 @@
                                     <div class="col">
                                         <div class="form-outline mb-2">
                                             <input type="name" name="NAMES" class="form-control input" id="NAMES" placeholder="Nombre(s)" aria-describedby="inputGroupPrepend" value="<?= isset($_GET['NAMES']) ? $_GET['NAMES'] : (isset($nombre) ? $nombre : '') ?>" autocomplete="off" required>
-                                            <label for="NAMES"></label>
+                                            <label for="NAMES" style="display: none;">nombres</label>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-outline mb-2">
                                             <input type="surname" name="SURNAMES" class="form-control input" id="SURNAMES" placeholder="Apellidos" aria-describedby="inputGroupPrepend" value="<?= isset($_GET['SURNAMES']) ? $_GET['SURNAMES'] : (isset($apellidos) ? $apellidos : '') ?>" autocomplete="off" required>
-                                            <label for="SURNAMES"></label>
+                                            <label for="SURNAMES" style="display: none;">apellidos</label>
                                         </div>
                                     </div>
                                 </div>    
                                     
                                 <div class="form-outline mb-2 mx-3">
                                     <input type="email" name="EMAIL" class="form-control input" id="EMAIL" placeholder="Correo electronico" value="<?= isset($_GET['EMAIL']) ? $_GET['EMAIL'] : (isset($email) ? $email : '') ?>" aria-describedby="inputGroupPrepend" autocomplete="off" required>
-                                    <label for="EMAIL"></label>
+                                    <label for="EMAIL" style="display: none;">email</label>
                                 </div>
                                 
                                 <div class="row text-center mx-1">
                                     <div class="col">
                                         <div class="form-outline mb-2">
                                             <input type="tel" name="PHONE" class="form-control input" id="PHONE" placeholder="Telefono(+57)" aria-describedby="inputGroupPrepend" value="<?= isset($_GET['PHONE']) ? $_GET['PHONE'] : (isset($telefono) ? $telefono : '') ?>" autocomplete="off" required>
-                                            <label for="PHONE"></label>
+                                            <label for="PHONE" style="display: none;">telefono</label>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -108,17 +109,17 @@
                                 
                                 <div class="form-outline mb-2 mx-3">
                                     <input type="password" name="PASSWORD" class="form-control input" id="PASSWORD" placeholder="Contraseña" value="" aria-describedby="inputGroupPrepend" autocomplete="off" required>
-                                    <label for="PASSWORD"></label>
+                                    <label for="PASSWORD" style="display: none;">contraseña</label>
                                 </div>
                                 <div class="form-outline mb-2 mx-3">
                                         <input type="password" name="CONFIRM" class="form-control input" id="CONFIRM" placeholder="Confirma tu contraseña" value="" aria-describedby="inputGroupPrepend" autocomplete="off" required>
-                                        <label for="CONFIRM"></label>
+                                        <label for="CONFIRM" style="display: none;">confirmar contraseña</label>
                                 </div>            
                                 <div class="row text-center mx-1">
                                     <div class="col-6">
                                         <div class="form-outline mb-2">
                                                 <input type="text" name="DATE" class="form-control input" id="DATE" placeholder="Nacimiento" aria-describedby="inputGroupPrepend" value="<?= isset($_GET['DATE']) ? $_GET['DATE'] : (isset($fecha) ? $fecha : '') ?>" autocomplete="off" required>
-                                                <label for="DATE"></label>
+                                                <label for="DATE" style="display: none;">fecha de nacimiento</label>
                                         </div>
                                     </div>
                                     <div class="col">
