@@ -1,18 +1,18 @@
 <?php
-require_once("../head/header_client.php");
+require_once("../head_english/header_client.php");
 require_once("../../controller/homeController.php");
 
 $obj = new homeController();
 
 if (empty($_SESSION['datas'])) {
-    header("Location:../user/login.php");
+    header("Location:../user_english/login_eng.php");
 }
 
 $email = $_SESSION['datas'];
 $type = $obj->RecogerTipo($email);
 
 if ($type != "Cliente") {
-    header("Location:../driver/panel_control_driver.php");
+    header("Location:../driver_english/panel_control_driver.php");
 }
 ?>
 
@@ -32,29 +32,29 @@ if ($type != "Cliente") {
     </div>
     <div class="container-fluid">
         <div class="title_inventory row">
-            <p class="text_title_inventory">¿Tienes alguna novedad con tu servicio?</p>
+            <p class="text_title_inventory">Do you have any updates on your service?</p>
         </div>
         <p class="separate_inventory"></p>
         <div class="text text-center pt-1 pb-1">
-            <p class="text-muted conditions mx-2">Cuentanos que deseas realizar con tu servicio.</p>
+            <p class="text-muted conditions mx-2">Tell us what you want to do with your service.</p>
         </div>
         <p class="separate_inventory"></p>
         <div class="agregar text-center pt-1 pb-1">
-            <button type="button" class="btn next" data-bs-toggle="modal" data-bs-target="#cancelar">Cancelar servicio</button>
+            <button type="button" class="btn next" data-bs-toggle="modal" data-bs-target="#cancelar">Cancel service</button>
         </div>
         <div class="modal fade" id="cancelar" data-bs-backdrop="false" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header text-modal">
-                        <h1 class="modal-title fs-5" id="cancelar">Alerta</h1>
+                        <h1 class="modal-title fs-5" id="cancelar">Alert</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body text-modal">
-                        ¿Estas seguro de cancelar tu servicio?, recuerda que no podras recuperar lo guardado en este.
+                        Are you sure you want to cancel your service? Remember that you won't be able to recover what's been saved in it.
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary text-modal" data-bs-dismiss="modal">No, cerrar</button>
-                        <button type="button" class="btn btn-danger text-modal" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#confirmarCancelar">Si, deseo cancelar</button>
+                        <button type="button" class="btn btn-secondary text-modal" data-bs-dismiss="modal">No, close</button>
+                        <button type="button" class="btn btn-danger text-modal" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#confirmarCancelar">Yes, I want to cancel</button>
                     </div>
                 </div>
             </div>
@@ -63,62 +63,62 @@ if ($type != "Cliente") {
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header text-modal">
-                        <h1 class="modal-title fs-5" id="confirmarCancelar">Cancelación de servicio</h1>
+                        <h1 class="modal-title fs-5" id="confirmarCancelar">Service Cancellation</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form action="cancel.php" method="POST">
                         <div class="modal-body text-modal">
-                            Cuentanos el motivo de tu cancelacion
+                            Tell us the reason for your cancellation
                         </div>
                         <div class="article form-outline mb-2" id="motivos" name="motivos">
                             <select name="motivo" id="motivo" class="form-select form-outline input-mo" required>
-                                <option value="" selected disabled>Selecciona un motivo</option>
-                                <option value="Ya no necesito el servicio">Ya no necesito el servicio</option>
-                                <option value="Problemas con el conductor asignado">Problemas con el conductor asignado</option>
-                                <option value="Problemas con el servicio">Problemas con el servicio</option>
-                                <option value="Otro">Otro</option>
+                                <option value="" selected disabled>Select a reason</option>
+                                <option value="Ya no necesito el servicio">No longer need the service</option>
+                                <option value="Problemas con el conductor asignado">Issues with assigned driver</option>
+                                <option value="Problemas con el servicio">Problems with the service</option>
+                                <option value="Otro">Other</option>
                             </select>
                         </div> 
                         <div class="article form-outline mb-2">
-                            <input type="text" name="descripcion" id="descripcion" class="form-control input-des" placeholder="Descripción" style="display: block; white-space: wrap; overflow: auto;">
+                            <input type="text" name="descripcion" id="descripcion" class="form-control input-des" placeholder="Description" style="display: block; white-space: wrap; overflow: auto;">
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary text-modal" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-danger text-modal" data-bs-toggle="modal">Enviar y cancelar</button>
+                            <button type="button" class="btn btn-secondary text-modal" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-danger text-modal" data-bs-toggle="modal">Send and cancel</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
         <div class="agregar text-center pt-1 pb-1">
-            <button type="button" class="btn next" data-bs-toggle="modal" data-bs-target="#posponer">Posponer servicio</button>
+            <button type="button" class="btn next" data-bs-toggle="modal" data-bs-target="#posponer">Postpone service</button>
         </div>
         <div class="modal fade" id="posponer" data-bs-backdrop="false" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header text-modal">
-                        <h1 class="modal-title fs-5" id="posponer">Posponer</h1>
+                        <h1 class="modal-title fs-5" id="posponer">Postpone</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form action="save_time_p.php" method="POST">
                         <div class="modal-body text-modal">
-                            Con gusto, ajusta aqui la fecha y hora de tu pedido
+                            Sure, adjust the date and time of your order here
                         </div>
                         <div class="title_date row">
-                            <p class="text_title_date">Fecha:</p>
+                            <p class="text_title_date">Date:</p>
                         </div>
                         <div class="article form-outline mb-2">
-                            <input type="date" name="fecha" id="fecha" class="form-control input-mo" placeholder="Selecciona una fecha" value="<?php echo $fecha_antigua ?>" required>
+                            <input type="date" name="fecha" id="fecha" class="form-control input-mo" placeholder="Select a date" value="<?php echo $fecha_antigua ?>" required>
                         </div>
                         <div class="title_date row">
-                            <p class="text_title_date">Hora:</p>
+                            <p class="text_title_date">Time:</p>
                         </div>
                         <div class="article form-outline mb-2">
-                            <input type="time" name="hora" id="hora" class="form-control input-mo" placeholder="Selecciona una hora" value="" required>
+                            <input type="time" name="hora" id="hora" class="form-control input-mo" placeholder="Select a time" value="" required>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary text-modal" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-success text-modal">Cambiar hora</a>
+                            <button type="button" class="btn btn-secondary text-modal" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success text-modal">Change time</a>
                         </div>
                     </form>
                 </div>
@@ -131,5 +131,5 @@ if ($type != "Cliente") {
         <?php endif;?>
     </div>
 <?php
-require_once("../head/footer.php");
+require_once("../head_english/footer.php");
 ?>

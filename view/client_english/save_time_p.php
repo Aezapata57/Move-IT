@@ -40,25 +40,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Verificar si la fecha es un festivo colombiano
     if (esFestivoColombiano($fecha_formateada)) {
         // Redirigir con un mensaje de error
-        $error .= "<li>No se realizaran servicios los dias festivos, por favor elige otra fecha</li>";
+        $error .= "<li>Services will not be held on holidays, please choose another date</li>";
         header("Location:news.php?error=" . $error);
         exit();
     }else if ($dia_semana == 0) { // Si es domingo (7)
-        $error .= "<li>No se realizaran servicios los domingos, por favor elige otra fecha</li>";
+        $error .= "<li>Services will not be held on Sundays, please choose another date</li>";
         header("Location:news.php?error=" . $error);
         exit();
     }else if (!$hora_valida) {
-        $error .= "<li>No se realizaran servicios antes de las 8am o despues de las 5pm, por favor elige una hora valida</li>";
+        $error .= "<li>Services will not be performed before 8am or after 5pm, please choose a valid time</li>";
         header("Location:news.php?error=" . $error);
         exit();
     }else if ($fecha_formateada < $fecha_actual || ($fecha_formateada == $fecha_actual && strtotime($hora) < strtotime($hora_actual))) {
-        $error .= "<li>La fecha y hora seleccionadas son anteriores a la fecha y hora actuales</li>";
+        $error .= "<li>The selected date and time is earlier than the current date and time</li>";
         header("Location:news.php?error=" . $error);
         exit();
     }else{
         $obj->guardarFechaHora($email, $fecha, $hora);
         $obj->servicioFecha($email, $fecha_actual);
-        $message .= "<li><b>TU SERVICIO HA SIDO POSPUESTO CON EXITO</b></li>";
+        $message .= "<li><b>YOUR SERVICE HAS BEEN SUCCESSFULLY POSTPONED</b></li>";
         header("Location:panel_control_client.php?message=" . $message);
     }
 }

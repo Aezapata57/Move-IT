@@ -10,7 +10,6 @@ $origen = $_POST["origen"];
 $destino = $_POST["destino"];
 $fecha = "";
 $hora = "";
-$verificado = "0";
 
 $emailverificado = $obj->verificarDireccionEmail($email);
 
@@ -21,7 +20,7 @@ if ($emailverificado) {
 
 } else {
 
-    $obj->guardarDirecciones($email, $origen, $destino, $fecha, $hora, $verificado);
+    $obj->guardarDirecciones($email, $origen, $destino, $fecha, $hora);
     header("Location:date.php");
 }
 

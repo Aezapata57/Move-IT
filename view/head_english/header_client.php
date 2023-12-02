@@ -16,7 +16,7 @@
         <div class="col-4 service-col">
         </div>
         <div class="col-2 settings-col">
-            <a href="" class="settings" id="loader_page">Settings</a>
+            <a href="settings.php" class="settings" id="loader_page">Settings</a>
         </div>
         <div class="col-2 session-col">
             <div>

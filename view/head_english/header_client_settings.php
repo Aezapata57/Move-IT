@@ -1,9 +1,14 @@
 <?php
     require_once("head.php");
     require_once("../../controller/homeController.php");
-    
 
     $obj = new homeController();
+    $cancelado = 0;
+    $confirmado = 0;
+    $cancelado = $obj->verificarCancelacion($_SESSION['datas']);
+    if ($cancelado == 0) {
+        $confirmado = $obj->verificarConfirmacion($_SESSION['datas']);
+    }
     $tabla = $obj->tablaExiste($_SESSION['datas']);
 ?>
 <div class="container-fluid primer-div">

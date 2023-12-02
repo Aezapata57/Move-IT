@@ -183,25 +183,35 @@
             return $this->MODEL->borrarUsuario($email);
         }
 
+        public function borrarInventario($email){
+            $this->MODEL->borrarInventario($email);
+        }
+
+        public function borrarDetalles($email){
+            $this->MODEL->borrarDetalles($email);
+        }
+
+
 
         //------------------------------SERVICIO------------------------------//
 
         public function servicioCompleto($email){
             $this->MODEL->servicioCompleto($email);
         }
-        public function servicioCancelado($email){
-            $this->MODEL->servicioCancelado($email);
+        public function servicioCancelado($email,$afectacion,$descripcion){
+            $this->MODEL->servicioCancelado($email,$afectacion,$descripcion);
         }
-        public function servicioAfectado($email, $descripcion){
-            $this->MODEL->servicioAfectado($email, $descripcion);
-        }
+
         public function servicioFecha($email, $fecha){
             $this->MODEL->servicioFecha($email, $fecha);
         }
 
-
         public function verificarConfirmacion($email){
             return $this->MODEL->verificarConfirmacion($email);
+        }
+
+        public function verificarCancelacion($email){
+            return $this->MODEL->verificarCancelacion($email);
         }
     }
 ?>

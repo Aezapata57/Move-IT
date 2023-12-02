@@ -345,7 +345,6 @@
             $statement->bindParam(":DESTINO",$destino);
             $statement->bindParam(":FECHA",$fecha);
             $statement->bindParam(":HORA",$hora);
-            $statement->bindParam(":VERIFICADO",$verificado);
             try {
                 $statement->execute();
                 return true;
@@ -419,10 +418,12 @@
         public function servicioCompleto($email) {
             $descripcion = "";
             $fecha = "";
-            $statement = $this->PDO->prepare("INSERT INTO `estados` (`EMAIL`, `COMPLETO`, `CANCELADA`, `AFECTACION`, `DESCRIPCION`, `FECHA`) VALUES (:EMAIL, '1', '0', '0', :DESCRIPCION, :FECHA);");
+            $afectacion = "";
+            $statement = $this->PDO->prepare("INSERT INTO `estados` (`EMAIL`, `COMPLETO`, `CANCELADA`, `AFECTACION`, `DESCRIPCION`, `FECHA`) VALUES (:EMAIL, '1', '0', :AFECTACION, :DESCRIPCION, :FECHA);");
             $statement->bindParam(":EMAIL",$email);
             $statement->bindParam(":DESCRIPCION",$descripcion);
             $statement->bindParam(":FECHA",$fecha);
+            $statement->bindParam(":AFECTACION",$afectacion);
             try {
                 $statement->execute();
                 return true;
@@ -431,20 +432,10 @@
             }
         }
 
-        public function servicioCancelado($email) {
-            $statement = $this->PDO->prepare("UPDATE estado SET CANCELADO = 1 WHERE EMAIL = :EMAIL");
+        public function servicioCancelado($email,$afectacion,$descripcion) {
+            $statement = $this->PDO->prepare("UPDATE estados SET CANCELADA = 1, AFECTACION = :AFECTACION, DESCRIPCION = :DESCRIPCION  WHERE EMAIL = :EMAIL");
             $statement->bindParam(":EMAIL",$email);
-            try {
-                $statement->execute();
-                return true;
-            } catch (PDOException $e) {
-                return false;
-            }
-        }
-
-        public function servicioAfectado($email, $descripcion) {
-            $statement = $this->PDO->prepare("UPDATE estado SET AFECTACION = 1, DESCRIPCION = :DESCRIPCION WHERE EMAIL = :EMAIL");
-            $statement->bindParam(":EMAIL",$email);
+            $statement->bindParam(":AFECTACION",$afectacion);
             $statement->bindParam(":DESCRIPCION",$descripcion);
             try {
                 $statement->execute();
@@ -455,7 +446,7 @@
         }
 
         public function servicioFecha($email, $fecha) {
-            $statement = $this->PDO->prepare("UPDATE estado SET FECHA = :FECHA WHERE EMAIL = :EMAIL");
+            $statement = $this->PDO->prepare("UPDATE estados SET FECHA = :FECHA WHERE EMAIL = :EMAIL");
             $statement->bindParam(":EMAIL",$email);
             $statement->bindParam(":FECHA",$fecha);
             try {
@@ -471,6 +462,13 @@
             $statement->bindParam(":EMAIL",$email);
             $statement->execute();
             return $statement->fetch()["COMPLETO"];
+        }
+
+        public function verificarCancelacion($email){  
+            $statement = $this->PDO->prepare("SELECT CANCELADA FROM estados WHERE EMAIL = :EMAIL;");
+            $statement->bindParam(":EMAIL",$email);
+            $statement->execute();
+            return $statement->fetch()["CANCELADA"];
         }
     }
 

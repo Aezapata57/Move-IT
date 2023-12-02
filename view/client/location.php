@@ -55,8 +55,7 @@
                     <p class="text_title_date">Origen:</p>
                 </div>
                 <div class="article form-outline mb-4">
-                    <input type="text" name="origen" id="origen" class="form-control input" placeholder="Selecciona un origen" value="<?php echo $origen_antiguo ?>" required autocomplete="off" required>
-                    <div id="origen-results"></div>
+                    <input type="text" name="origen" id="origen" class="form-control input" placeholder="Selecciona un origen" value="<?php echo $origen_antiguo ?>" required>
                 </div>
                 <div class="title_date row">
                     <p class="text_title_date">Destino:</p>
